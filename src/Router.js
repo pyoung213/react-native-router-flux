@@ -6,12 +6,8 @@
  * LICENSE file in the root directory of this source tree.
  *
  */
-import React, {
-  Component,
-  PropTypes,
-} from 'react';
-import { BackAndroid } from 'react-native';
-import NavigationExperimental from 'react-native-experimental-navigation';
+import React, { Component, PropTypes, } from 'react';
+import { BackAndroid, NavigationExperimental } from 'react-native';
 
 import Actions, { ActionMap } from './Actions';
 import getInitialStateFromRoot from './State';
@@ -20,9 +16,7 @@ import DefaultRenderer from './DefaultRenderer';
 import Scene from './Scene';
 import * as ActionConst from './ActionConst';
 
-const {
-  RootContainer: NavigationRootContainer,
-} = NavigationExperimental;
+const {RootContainer: NavigationRootContainer, } = NavigationExperimental;
 
 const propTypes = {
   dispatch: PropTypes.func,
@@ -42,7 +36,9 @@ class Router extends Component {
     this.handleProps = this.handleProps.bind(this);
     this.handleBackAndroid = this.handleBackAndroid.bind(this);
     const reducer = this.handleProps(props);
-    this.state = { reducer };
+    this.state = {
+      reducer
+    };
   }
 
   getChildContext() {
@@ -57,7 +53,9 @@ class Router extends Component {
 
   componentWillReceiveProps(props) {
     const reducer = this.handleProps(props);
-    this.setState({ reducer });
+    this.setState({
+      reducer
+    });
   }
 
   componentWillUnmount() {
@@ -65,11 +63,7 @@ class Router extends Component {
   }
 
   handleBackAndroid() {
-    const {
-      backAndroidHandler,
-      onBackAndroid,
-      onExitApp,
-    } = this.props;
+    const {backAndroidHandler, onBackAndroid, onExitApp, } = this.props;
     // optional for customizing handler
     if (backAndroidHandler) {
       return backAndroidHandler();
@@ -101,9 +95,9 @@ class Router extends Component {
       if (Array.isArray(props.children) || props.children.props.component) {
         scenes = (
           <Scene
-            key="__root"
-            hideNav
-            {...this.props}
+          key="__root"
+          hideNav
+          {...this.props}
           >
             {props.children}
           </Scene>
@@ -113,7 +107,7 @@ class Router extends Component {
     }
 
     // eslint-disable-next-line no-unused-vars
-    const { children, styles, scenes, reducer, createReducer, ...parentProps } = props;
+    const {children, styles, scenes, reducer, createReducer, ...parentProps} = props;
 
     scenesMap.rootProps = parentProps;
 
@@ -121,10 +115,10 @@ class Router extends Component {
     const reducerCreator = props.createReducer || Reducer;
 
     const routerReducer = props.reducer || (
-      reducerCreator({
-        initialState,
-        scenes: scenesMap,
-      }));
+    reducerCreator({
+      initialState,
+      scenes: scenesMap,
+    }));
 
     return routerReducer;
   }
@@ -138,12 +132,18 @@ class Router extends Component {
       const constAction = (props.type && ActionMap[props.type] ? ActionMap[props.type] : null);
       if (this.props.dispatch) {
         if (constAction) {
-          this.props.dispatch({ ...props, type: constAction });
+          this.props.dispatch({
+            ...props,
+            type: constAction
+          });
         } else {
           this.props.dispatch(props);
         }
       }
-      return (constAction ? onNavigate({ ...props, type: constAction }) : onNavigate(props));
+      return (constAction ? onNavigate({
+        ...props,
+        type: constAction
+      }) : onNavigate(props));
     };
 
     return <DefaultRenderer onNavigate={onNavigate} navigationState={navigationState} />;
@@ -154,10 +154,10 @@ class Router extends Component {
 
     return (
       <NavigationRootContainer
-        reducer={this.state.reducer}
-        renderNavigation={this.renderNavigation}
+      reducer={this.state.reducer}
+      renderNavigation={this.renderNavigation}
       />
-    );
+      );
   }
 }
 

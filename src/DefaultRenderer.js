@@ -15,8 +15,8 @@ import {
   View,
   StyleSheet,
   Dimensions,
+  NavigationExperimental
 } from 'react-native';
-import NavigationExperimental from 'react-native-experimental-navigation';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 
 import TabBar from './TabBar';
